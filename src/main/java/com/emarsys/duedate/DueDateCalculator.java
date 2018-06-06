@@ -3,11 +3,17 @@ package com.emarsys.duedate;
 import java.time.LocalDateTime;
 
 /**
- * Due date calculation helper for reported bugs.
+ * Due date calculation helper util for reported bugs.
  *
  * @author NG
  */
 public final class DueDateCalculator {
+
+    /**
+     * Private constructor.
+     */
+    private DueDateCalculator() {
+    }
 
     /**
      * Calculates and returns the due date from the given reported time and turnaround hours for the work.

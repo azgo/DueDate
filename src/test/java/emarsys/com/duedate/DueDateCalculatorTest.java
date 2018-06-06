@@ -19,13 +19,12 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class DueDateCalculatorTest {
 
-    private DueDateCalculator testSubject = new DueDateCalculator();
     private static DateTimeFormatter datetimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
 
     @Test
     @Parameters
     public void testCalculateDueDate(LocalDateTime reportedDateTime, int turnaroundTime, LocalDateTime expectedDueDateTime) {
-        assertEquals(expectedDueDateTime, testSubject.calculateDueDate(reportedDateTime, turnaroundTime));
+        assertEquals(expectedDueDateTime, DueDateCalculator.calculateDueDate(reportedDateTime, turnaroundTime));
     }
 
     @SuppressWarnings("unused")

@@ -61,7 +61,7 @@
 					<includeResources>false</includeResources>
 					<includeTestResources>false</includeTestResources>
 					<failsOnError>false</failsOnError>
-					<consoleOutput>true</consoleOutput>
+					<consoleOutput>false</consoleOutput>
 				</configuration>
 			</plugin>
 			<plugin>
