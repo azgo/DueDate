@@ -1,42 +1,63 @@
 package com.emarsys.duedate;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * Hello world!
+ * Due date calculator starter app.
+ *
+ * @author NG
  */
-public class App {
-
-    private static final Logger LOG = LoggerFactory.getLogger(App.class);
-    private static DateTimeFormatter datetimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
+public final class App {
 
     /**
-     * For case of command line run
-     * 
+     * Private constructor.
+     */
+    private App() {
+    }
+
+    /**
+     * For case of command line run.
+     *
      * @param args.
      *        First param is the reported time of the bug, format is 'yyyy.MM.dd HH:mm'
      *        Second param is the turnaround time in hours
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         if (args.length == 2) {
-            validateDatetime(args[0]);
-            // validateTunraroundTime(args[1]);
+            LocalDateTime reportDatetime = validateDatetime(args[0]);
+            int tunraroundTime = validateTunraroundTime(args[1]);
 
+            LocalDateTime dueDate = DueDateCalculator.calculateDueDate(reportDatetime, tunraroundTime);
+
+            System.out.println(String.format("The calculated due date: %s", dueDate));
         } else {
-            LOG.error("invalid parameters. Use [datetime],[turnaround] format.");
+            System.out.println("invalid parameters. Use [datetime] [turnaround] format.");
         }
     }
 
-    private static void validateDatetime(String datetime) {
+    private static LocalDateTime validateDatetime(final String datetime) {
+        LocalDateTime reportDatetime = null;
+
         try {
-            LocalDateTime.parse(datetime, datetimeFormatter);
+            reportDatetime = LocalDateTime.parse(datetime, DateUtil.getDatetimeFormatter());
         } catch (DateTimeParseException e) {
-            LOG.error("invalid datetime format");
+            System.out.println("invalid datetime format");
         }
+
+        return reportDatetime;
     }
+
+    private static int validateTunraroundTime(final String tunraroundTime) {
+        int time = 0;
+
+        try {
+            time = Integer.valueOf(tunraroundTime);
+        } catch (DateTimeParseException e) {
+            System.out.println("invalid tunraround time");
+        }
+
+        return time;
+    }
+
 }

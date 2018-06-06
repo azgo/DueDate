@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.emarsys</groupId>
-	<artifactId>duedate-app</artifactId>
+	<artifactId>duedate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -15,7 +15,7 @@
 		<java.version>1.10</java.version>
 		<maven.compiler.source>1.10</maven.compiler.source>
 		<maven.compiler.target>1.10</maven.compiler.target>
-		<slf4j.version>1.7.14</slf4j.version>
+		<slf4j.version>1.7.25</slf4j.version>
 		<codequality.location>${basedir}/codequality</codequality.location>
 		<checkstyle.version>2.17</checkstyle.version>
 		<checkstyle.configuration>checkstyle-configuration.xml</checkstyle.configuration>
@@ -33,6 +33,11 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.11.0</version>
 		</dependency>
 
 		<!-- Testing -->
@@ -86,7 +91,21 @@
 					<consoleOutput>true</consoleOutput>
 				</configuration>
 			</plugin>
-
+			<plugin>
+				<!-- Build an executable JAR -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>${groupId}.${artifactId}.App</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
