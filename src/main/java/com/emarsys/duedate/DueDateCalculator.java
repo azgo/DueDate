@@ -59,7 +59,7 @@ public class DueDateCalculator {
         return dueDate;
     }
 
-    public int getWorkDays(int turnaroundHours) {
+    private int getWorkDays(int turnaroundHours) {
         int workDays = 0;
 
         if (turnaroundHours > 0) {
@@ -72,7 +72,7 @@ public class DueDateCalculator {
         return workDays;
     }
 
-    public int getWorkHoursOverADay(int turnaroundHours) {
+    private int getWorkHoursOverADay(int turnaroundHours) {
         int workHours = turnaroundHours;
 
         if (turnaroundHours > 0) {

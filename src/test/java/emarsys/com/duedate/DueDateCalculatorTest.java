@@ -1,5 +1,6 @@
 package emarsys.com.duedate;
 
+import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,6 +28,13 @@ public class DueDateCalculatorTest extends TestCase {
         assertEquals(expectedDueDateTime, testSubject.calculateDueDate(reportedDateTime, turnaroundTime));
     }
 
+    /**
+     * Test for private "getWorkDays" method. Not need but helped, leaving here.
+     * 
+     * @param turnaroundTime
+     * @param expectedWorkDays
+     * @throws Exception Generic Exception is enough here
+     */
     @Test
     @Parameters({
             "0,0",
@@ -39,10 +47,18 @@ public class DueDateCalculatorTest extends TestCase {
             "17,2",
             "20,2"
     })
-    public void testGetWorkDays(int turnaroundTime, int expectedWorkDays) {
-        assertEquals(expectedWorkDays, testSubject.getWorkDays(turnaroundTime));
+    public void testGetWorkDays(int turnaroundTime, int expectedWorkDays) throws Exception {
+        Method testSubjectMethod = getTestSubjectMethod("getWorkDays");
+        assertEquals(expectedWorkDays, testSubjectMethod.invoke(testSubject, turnaroundTime));
     }
 
+    /**
+     * Test for private "getWorkHoursOverADay" method. Not need but helped, leaving here.
+     * 
+     * @param turnaroundTime
+     * @param expectedWorkDays
+     * @throws Exception Generic Exception is enough here
+     */
     @Test
     @Parameters({
             "0,0",
@@ -54,8 +70,9 @@ public class DueDateCalculatorTest extends TestCase {
             "17,1",
             "20,4"
     })
-    public void testGetWorkHoursOverADay(int turnaroundTime, int expectedWorkDays) {
-        assertEquals(expectedWorkDays, testSubject.getWorkHoursOverADay(turnaroundTime));
+    public void testGetWorkHoursOverADay(int turnaroundTime, int expectedWorkDays) throws Exception {
+        Method testSubjectMethod = getTestSubjectMethod("getWorkHoursOverADay");
+        assertEquals(expectedWorkDays, testSubjectMethod.invoke(testSubject, turnaroundTime));
     }
 
     private Object[] parametersForTestCalculateDueDate() {
@@ -81,4 +98,17 @@ public class DueDateCalculatorTest extends TestCase {
         };
     }
 
+    /**
+     * Returns the method by its name from the testSubject class
+     * 
+     * @param methodName
+     * @return The method to test
+     * @throws SecurityException
+     * @throws NoSuchMethodException
+     */
+    private Method getTestSubjectMethod(String methodName) throws NoSuchMethodException, SecurityException {
+        Method methodSubject = testSubject.getClass().getDeclaredMethod(methodName, int.class);
+        methodSubject.setAccessible(true);
+        return methodSubject;
+    }
 }
